@@ -1,3 +1,7 @@
-# FROM node:16.14-alpine
-# WORKDIR /app-backend
-#  ...
+FROM node:16.14-alpine
+WORKDIR /app-backend
+EXPOSE 3000
+COPY . .
+RUN npm install
+ENTRYPOINT ["npm", "run"]
+CMD ["start"]
