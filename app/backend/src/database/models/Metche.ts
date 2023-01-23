@@ -29,7 +29,7 @@ Metche.init(
     sequelize: db,
     underscored: true,
     timestamps: false,
-    tableName: 'Metches',
+    tableName: 'metches',
   },
 );
 
