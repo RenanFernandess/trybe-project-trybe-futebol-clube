@@ -1,3 +1,3 @@
 import loginValidate from './loginValidate';
 
-export default { loginValidate };
+export default loginValidate;
