@@ -1,12 +1,5 @@
-export type TLogin = {
-  email: string,
-  password: string,
-};
+import TLogin from './login';
+import TUserdb from './user';
 
-export type TUserdb = {
-  id: number,
-  username: string,
-  role: string,
-  email: string,
-  password: string,
-};
+export default TLogin;
+export { TUserdb };
