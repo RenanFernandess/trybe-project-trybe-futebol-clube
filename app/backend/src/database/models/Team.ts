@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
+import Metche from './Metche';
 
 class Team extends Model {
   declare id: number;
@@ -26,5 +27,11 @@ Team.init(
     tableName: 'teams',
   },
 );
+
+Team.hasMany(Metche, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
+Team.hasMany(Metche, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
+
+Metche.belongsTo(Team, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
+Metche.belongsTo(Team, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
 
 export default Team;
