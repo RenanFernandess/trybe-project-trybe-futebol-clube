@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import checkLogin from './schemas';
 
-export default (req: Request, res: Response, next: NextFunction) => {
+const loginValidate = (req: Request, res: Response, next: NextFunction) => {
   const { body: { email, password } } = req;
   const { error } = checkLogin.validate({ email, password });
   if (error) {
@@ -9,3 +9,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
   }
   next();
 };
+
+export default loginValidate;
