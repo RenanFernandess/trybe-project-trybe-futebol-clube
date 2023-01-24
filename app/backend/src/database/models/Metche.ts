@@ -1,8 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import Team from './Team';
 
-class Metche extends Model {
+class Matche extends Model {
   declare id: number;
   declare homeTeamId: number;
   declare homeTeamGoals: number;
@@ -11,7 +10,7 @@ class Metche extends Model {
   declare inProgress: boolean;
 }
 
-Metche.init(
+Matche.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -29,14 +28,8 @@ Metche.init(
     sequelize: db,
     underscored: true,
     timestamps: false,
-    tableName: 'metches',
+    tableName: 'matches',
   },
 );
 
-Metche.belongsTo(Team, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
-Metche.belongsTo(Team, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
-
-Team.hasMany(Metche, { foreignKey: 'homeTeamId', as: 'homeTeamId' });
-Team.hasMany(Metche, { foreignKey: 'awayTeamId', as: 'awayTeamId' });
-
-export default Metche;
+export default Matche;
