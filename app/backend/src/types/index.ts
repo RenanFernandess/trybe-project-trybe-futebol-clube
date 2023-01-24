@@ -1,5 +1,5 @@
 import TLogin from './login';
-import TUserdb from './user';
+import TUserdb, { TUser } from './user';
 
 export default TLogin;
-export { TUserdb };
+export { TUserdb, TUser };
