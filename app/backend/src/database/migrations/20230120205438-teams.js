@@ -9,15 +9,18 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      teamName: {
+      'team_name': {
         type: Sequelize.STRING,
         allowNull: false,
-        field: 'team_name',
       }
+    },
+    {
+      timestamps: false,
+      underscored: true,
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('teams');
   }
 };

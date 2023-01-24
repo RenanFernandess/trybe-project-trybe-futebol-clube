@@ -9,42 +9,42 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      homeTeamId: {
+      'home_team_id': {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'home_team_id',
         references: {
           model: 'teams',
           key: 'id',
         },
       },
-      homeTeamGoals: {
+      'home_team_goals': {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'home_team_goals',
       },
-      awayTeamId: {
+      'away_team_id': {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'away_team_id',
         references: {
           model: 'teams',
           key: 'id',
         },
       },
-      awayTeamGoals: {
+      'away_team_goals': {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'away_team_goals',
       },
-      inProgress: {
+      'in_progress': {
         type: Sequelize.BOOLEAN,
-        field: 'in_progress',
+        allowNull: false
       },
+    },
+    {
+      timestamps: false,
+      underscored: true,
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('matches');
   }
 };

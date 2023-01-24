@@ -13,7 +13,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      role: Sequelize.STRING,
+      role: {
+        type: Sequelize.STRING,
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -22,10 +24,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       }
+    },
+    {
+      timestamps: false,
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('users');
   }
 };
