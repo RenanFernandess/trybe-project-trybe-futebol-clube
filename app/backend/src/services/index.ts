@@ -1,3 +1,3 @@
-import Login from './login.service';
+import LoginService from './login.service';
 
-export default Login;
+export default LoginService;

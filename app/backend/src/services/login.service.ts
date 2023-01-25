@@ -1,23 +1,18 @@
 import * as bcript from 'bcryptjs';
-import TLogin, { TUserdb } from '../types';
+import TLogin from '../types';
 import User from '../database/models/User';
 import Token from '../auth';
+import HttpError from '../errors';
 
-export default class Login {
-  declare user: (TUserdb | null);
-  private _Token: Token;
-  constructor(token: Token) {
-    this._Token = token;
-  }
+export default class LoginService {
+  constructor(private _Token: Token) {}
 
   public async login({ email, password }: TLogin): Promise<string> {
-    this.user = await User.findOne({ where: { email } });
-    if (!this.user || await !bcript.compare(password, this.user.password)) {
-      const error = new Error('Incorrect email or password');
-      // status http 401
-      throw error;
+    const user = await User.findOne({ where: { email } });
+    if (!user || !(await bcript.compare(password, user.password))) {
+      throw new HttpError(401, 'Incorrect email or password');
     }
-    const { password: _password, ...user } = this.user;
-    return this._Token.create(user);
+    const { password: _password, ...userFields } = user;
+    return this._Token.create(userFields);
   }
 }
