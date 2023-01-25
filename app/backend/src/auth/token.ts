@@ -2,6 +2,8 @@ import * as Jwt from 'jsonwebtoken';
 import { TUser } from '../types';
 import IToken from '../interfaces';
 import 'dotenv/config';
+import User from '../database/models/User';
+import HttpError from '../errors';
 
 export default class Token implements IToken {
   private _secret: Jwt.Secret;
@@ -19,8 +21,16 @@ export default class Token implements IToken {
     return Jwt.sign({ data: user }, this._secret, this._options);
   }
 
-  public Validate(token: string): void {
-    Jwt.verify(token, this._secret);
-    // Not Implemented
+  public async Validate(token: string): Promise<TUser> {
+    const decoded = Jwt.verify(token, this._secret) as Jwt.JwtPayload;
+    const { data: { userId, email } } = decoded;
+    const user = await User.findOne({
+      where: { id: userId, email },
+      attributes: { exclude: ['password'] },
+    });
+    if (!user) {
+      throw new HttpError(401, 'Expired or invalid token');
+    }
+    return user;
   }
 }
