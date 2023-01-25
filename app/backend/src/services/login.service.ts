@@ -12,7 +12,7 @@ export default class LoginService {
     if (!user || !(await bcript.compare(password, user.password))) {
       throw new HttpError(401, 'Incorrect email or password');
     }
-    const { password: _password, ...userFields } = user;
-    return this._Token.create(userFields);
+    const { id, username, role } = user;
+    return this._Token.create({ id, username, role });
   }
 }
