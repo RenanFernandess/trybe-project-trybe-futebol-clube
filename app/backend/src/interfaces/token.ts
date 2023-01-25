@@ -1,6 +1,6 @@
-import { TUser } from '../types';
+import { TUser, TUserToken } from '../types';
 
 export default interface IToken {
-  create(user: TUser): string;
+  create(user: TUserToken): string;
   Validate(token: string): Promise<TUser>;
 }

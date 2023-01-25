@@ -1,5 +1,5 @@
 import * as Jwt from 'jsonwebtoken';
-import { TUser } from '../types';
+import { TUser, TUserToken } from '../types';
 import IToken from '../interfaces';
 import 'dotenv/config';
 import User from '../database/models/User';
@@ -17,15 +17,17 @@ export default class Token implements IToken {
     };
   }
 
-  public create(user: TUser): string {
+  public create(user: TUserToken): string {
     return Jwt.sign({ data: user }, this._secret, this._options);
   }
 
   public async Validate(token: string): Promise<TUser> {
     const decoded = Jwt.verify(token, this._secret) as Jwt.JwtPayload;
-    const { data: { userId, email } } = decoded;
+    console.log(decoded);
+    const { data: { id, email } } = decoded;
+    console.log({ id, email });
     const user = await User.findOne({
-      where: { id: userId, email },
+      where: { id, email },
       attributes: { exclude: ['password'] },
     });
     if (!user) {
