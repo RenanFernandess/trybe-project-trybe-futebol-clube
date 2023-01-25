@@ -1,9 +1,12 @@
-export type TUser = {
+export type TUserToken = {
   id: number,
   username: string,
   role: string,
-  email: string,
 };
+
+export type TUser = {
+  email: string,
+} & TUserToken;
 
 type TUserdb = {
   password: string,
