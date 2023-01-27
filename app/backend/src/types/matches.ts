@@ -33,3 +33,8 @@ export type TMatches = {
 export type TMatchesdb = {
   id: number,
 } & TMatches;
+
+export type TScore = {
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+};

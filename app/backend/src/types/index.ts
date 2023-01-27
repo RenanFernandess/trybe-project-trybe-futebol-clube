@@ -1,7 +1,7 @@
 import TLogin from './login';
 import TUserdb, { TUser, TUserToken } from './user';
 import TTeams from './times';
-import TMatchesTeam, { TMatches, TMatchesAdd, TMatchesdb } from './matches';
+import TMatchesTeam, { TMatches, TMatchesAdd, TMatchesdb, TScore } from './matches';
 
 export default TLogin;
 export {
@@ -13,4 +13,5 @@ export {
   TMatches,
   TMatchesAdd,
   TMatchesdb,
+  TScore,
 };
