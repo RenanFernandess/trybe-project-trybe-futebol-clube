@@ -43,4 +43,9 @@ export default class MatchController {
     const message = await this._MatchService.finish(id);
     res.status(200).json({ message });
   };
+
+  public updateScore = async ({ params: { id }, body }: Request, res: Response) => {
+    await this._MatchService.updateScore(id, body);
+    return res.status(200).json({ ok: 'ok' });
+  };
 }
