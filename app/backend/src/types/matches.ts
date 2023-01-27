@@ -1,4 +1,4 @@
-type TMatches = {
+type TMatchesTeam = {
   id: number,
   homeTeamId: number,
   homeTeamGoals: number,
@@ -13,4 +13,23 @@ type TMatches = {
   },
 };
 
-export default TMatches;
+export default TMatchesTeam;
+
+export type TMatchesAdd = {
+  homeTeamId: number,
+  homeTeamGoals: number,
+  awayTeamId: number,
+  awayTeamGoals: number,
+};
+
+export type TMatches = {
+  homeTeamId: number,
+  homeTeamGoals: number,
+  awayTeamId: number,
+  awayTeamGoals: number,
+  inProgress: boolean,
+};
+
+export type TMatchesdb = {
+  id: number,
+} & TMatches;
