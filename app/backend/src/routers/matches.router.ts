@@ -12,5 +12,6 @@ matchesRouter.get('/', matchController.getAll);
 matchesRouter.get('/:id', matchController.findById);
 matchesRouter.post('/', tokenValidate, matchController.create);
 matchesRouter.patch('/:id/finish', matchController.finish);
+matchesRouter.patch('/:id', matchController.updateScore);
 
 export default matchesRouter;
