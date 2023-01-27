@@ -4,6 +4,7 @@ import IToken from '../interfaces';
 import 'dotenv/config';
 import User from '../database/models/User';
 import HttpError from '../errors';
+import { TOKEN_INVALID } from '../errors/messages';
 
 export default class Token implements IToken {
   private _secret: jwt.Secret;
@@ -26,7 +27,7 @@ export default class Token implements IToken {
     const { id } = decoded;
     const user = await User.findByPk(id);
     if (!user) {
-      throw new HttpError(401, 'Expired or invalid token');
+      throw new HttpError(401, TOKEN_INVALID);
     }
     const { dataValues: { password: _password, ...userWithoutPassword } } = user;
     return userWithoutPassword;
