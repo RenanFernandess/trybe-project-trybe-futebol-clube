@@ -1,6 +1,6 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
-import { TMatchesAdd, TMatchesdb, TMatchesTeam } from '../types';
+import { TMatchesAdd, TMatchesdb, TMatchesTeam, TScore } from '../types';
 import HttpError from '../errors';
 import EQUAL_TEAMS, { TEAM_NOT_FOUND } from '../errors/messages';
 
@@ -43,5 +43,12 @@ export default class MatchService {
   public finish = async (id: string | number): Promise<string> => {
     await Match.update({ inProgress: false }, { where: { id } });
     return 'finished';
+  };
+
+  public updateScore = async (id: string, { homeTeamGoals, awayTeamGoals }: TScore) => {
+    await Match.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, { where: { id } });
   };
 }
