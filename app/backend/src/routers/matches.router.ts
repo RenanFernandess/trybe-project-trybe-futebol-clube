@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { tokenValidate } from '../middlewares';
 import { MatchService } from '../services';
 import { MatchController } from '../controllers';
 
@@ -9,5 +10,7 @@ const matchesRouter = Router();
 
 matchesRouter.get('/', matchController.getAll);
 matchesRouter.get('/:id', matchController.findById);
+matchesRouter.post('/', tokenValidate, matchController.create);
+matchesRouter.patch('/:id/finish', matchController.finish);
 
 export default matchesRouter;
