@@ -1,6 +1,6 @@
 import TLogin from './login';
 import TUserdb, { TUser, TUserToken } from './user';
-import TTeams, { TTeamsMatches } from './times';
+import TTeams, { TTeamsMatches, TScoreWithId } from './times';
 import TMatchesTeam, { TMatches, TMatchesAdd, TMatchesdb, TScore } from './matches';
 import Tkey, { TLeaderBoard, TLeaderBoardInit } from './leaderboard';
 
@@ -19,4 +19,5 @@ export {
   Tkey,
   TLeaderBoard,
   TLeaderBoardInit,
+  TScoreWithId,
 };

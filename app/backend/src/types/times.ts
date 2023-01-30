@@ -1,5 +1,3 @@
-import { TScore } from './matches';
-
 type TTeams = {
   id: number,
   teamName: string,
@@ -7,8 +5,14 @@ type TTeams = {
 
 export default TTeams;
 
+export type TScoreWithId = {
+  homeTeamId?: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number
+};
+
 export type TTeamsMatches = {
   teamName: string,
-  homeTeam: TScore[],
-  awayTeam: TScore[],
+  homeTeam: TScoreWithId[],
+  awayTeam: TScoreWithId[],
 };
