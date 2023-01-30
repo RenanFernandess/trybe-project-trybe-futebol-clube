@@ -15,21 +15,16 @@ export default class LeaderboardService {
   }
 
   public findAll = async (path: string) => {
+    const options = {
+      model: Match,
+      where: { inProgress: false },
+      attributes: ['homeTeamGoals', 'awayTeamGoals'],
+    };
     const matchs = await Team.findAll({
       attributes: { exclude: ['id'] },
-      include: [{
-        model: Match,
-        as: 'homeTeam',
-        attributes: ['homeTeamGoals', 'awayTeamGoals'],
-        where: { inProgress: false },
-      }, {
-        model: Match,
-        as: 'awayTeam',
-        attributes: ['homeTeamGoals', 'awayTeamGoals'],
-        where: { inProgress: false },
-      }],
+      include: [{ ...options, as: 'homeTeam' }, { ...options, as: 'awayTeam' }],
     }) as unknown as TTeamsMatches[];
-    return matchs.map(this._generate(path));
+    return matchs.map(this._generate(path)).sort(this._sort);
   };
 
   private _generate = (path: string) => (team: TTeamsMatches): TLeaderBoard => {
@@ -59,4 +54,9 @@ export default class LeaderboardService {
       totalLosses: (homeTeam < awayTeam) ? (totalLosses + 1) : totalLosses,
     };
   };
+
+  private _sort = (a: TLeaderBoard, b: TLeaderBoard) => (
+    b.totalPoints - a.totalPoints || b.totalVictories - a.totalVictories
+    || b.goalsBalance - a.goalsBalance || b.goalsFavor - a.goalsFavor
+    || b.goalsOwn - a.goalsOwn);
 }
