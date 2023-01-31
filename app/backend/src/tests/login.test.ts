@@ -7,12 +7,13 @@ import { app } from '../app';
 import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
+import { FIELDS_FILLED } from '../errors/messages';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Testa o login', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -39,7 +40,16 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o email não seja passado.`, async () => {
+    const res = await chai
+      .request(app)
+      .post('/login')
+      .send({
+        "email": "",
+        "password": "password"
+      });
+
+    expect(res.status).to.be.equal(400);
+    expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
   });
 });
