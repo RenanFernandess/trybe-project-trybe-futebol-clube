@@ -104,6 +104,16 @@ describe('Testa o login', () => {
       expect(res.status).to.be.equal(401);
       expect(res.body.message).to.be.equal(TOKEN_INVALID)
     })
+
+    it(`Verifica se é retornado code 401 e a mensagem "${TOKEN_INVALID}", caso o token não seja valido.`, async () => {
+      const res = await chai
+        .request(app)
+        .get('/login/validate')
+        .set({ authorization: 'Invalid_token' });
+
+      expect(res.status).to.be.equal(401);
+      expect(res.body.message).to.be.equal(TOKEN_INVALID)
+    })
   });
   afterEach(sinon.restore);
 });
