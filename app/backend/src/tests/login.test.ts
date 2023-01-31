@@ -15,78 +15,81 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testa o login', () => {
-  it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o email não seja passado.`, async () => {
-    const res = await chai
-      .request(app)
-      .post('/login')
-      .send({
-        "email": "",
-        "password": "password"
-      });
+  describe('Testa a rota post("/login")', () => {
+    it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o email não seja passado.`, async () => {
+      const res = await chai
+        .request(app)
+        .post('/login')
+        .send({
+          "email": "",
+          "password": "password"
+        });
+  
+      expect(res.status).to.be.equal(400);
+      expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
+    });
+    it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o password não seja passado.`, async () => {
+      const res = await chai
+        .request(app)
+        .post('/login')
+        .send({
+          "email": "test@gmail.com",
+          "password": ""
+        });
+  
+      expect(res.status).to.be.equal(400);
+      expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
+    });
+  
+    it(`Verifica se é retornado code 401 e a mensagem "${INCORRECT_LOGIN}", caso o email não seja valido.`, async () => {
+      sinon
+        .stub(User, "findOne")
+        .resolves(null);
+      const res = await chai
+        .request(app)
+        .post('/login')
+        .send({
+          "email": "incorrect@admin.com",
+          "password": "secret_admin"
+        });
+  
+      expect(res.status).to.be.equal(401);
+      expect(res.body).to.be.deep.equal({ message: INCORRECT_LOGIN })
+    });
+  
+    it(`Verifica se é retornado code 401 e a mensagem "${INCORRECT_LOGIN}", caso o password não seja valido.`, async () => {
+      sinon
+        .stub(User, "findOne")
+        .resolves(USER_MOCK as User);
+      const res = await chai
+        .request(app)
+        .post('/login')
+        .send({
+          "email": "admin@admin.com",
+          "password": "incorrect"
+        });
+  
+      expect(res.status).to.be.equal(401);
+      expect(res.body).to.be.deep.equal({ message: INCORRECT_LOGIN })
+    });
+  
+    it(`Verifica se é possivel fazer login com email e senha validos.`, async () => {
+      sinon
+        .stub(User, "findOne")
+        .resolves(USER_MOCK as User);
+      const res = await chai
+        .request(app)
+        .post('/login')
+        .send({
+          "email": "admin@admin.com",
+          "password": "secret_admin"
+        });
+  
+      expect(res.status).to.be.equal(200);
+      expect(typeof res.body.token).to.be.equal('string')
+    });
 
-    expect(res.status).to.be.equal(400);
-    expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
+    afterEach(sinon.restore);
   });
-  it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o password não seja passado.`, async () => {
-    const res = await chai
-      .request(app)
-      .post('/login')
-      .send({
-        "email": "test@gmail.com",
-        "password": ""
-      });
 
-    expect(res.status).to.be.equal(400);
-    expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
-  });
-
-  it(`Verifica se é retornado code 401 e a mensagem "${INCORRECT_LOGIN}", caso o email não seja valido.`, async () => {
-    sinon
-      .stub(User, "findOne")
-      .resolves(null);
-    const res = await chai
-      .request(app)
-      .post('/login')
-      .send({
-        "email": "incorrect@admin.com",
-        "password": "secret_admin"
-      });
-
-    expect(res.status).to.be.equal(401);
-    expect(res.body).to.be.deep.equal({ message: INCORRECT_LOGIN })
-  });
-
-  it(`Verifica se é retornado code 401 e a mensagem "${INCORRECT_LOGIN}", caso o password não seja valido.`, async () => {
-    sinon
-      .stub(User, "findOne")
-      .resolves(USER_MOCK as User);
-    const res = await chai
-      .request(app)
-      .post('/login')
-      .send({
-        "email": "admin@admin.com",
-        "password": "incorrect"
-      });
-
-    expect(res.status).to.be.equal(401);
-    expect(res.body).to.be.deep.equal({ message: INCORRECT_LOGIN })
-  });
-
-  it(`Verifica se é possivel fazer login com email e senha validos.`, async () => {
-    sinon
-      .stub(User, "findOne")
-      .resolves(USER_MOCK as User);
-    const res = await chai
-      .request(app)
-      .post('/login')
-      .send({
-        "email": "admin@admin.com",
-        "password": "secret_admin"
-      });
-
-    expect(res.status).to.be.equal(200);
-    expect(typeof res.body.token).to.be.equal('string')
-  });
-
-  afterEach(sinon.restore);
 });
