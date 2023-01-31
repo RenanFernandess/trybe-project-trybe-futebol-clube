@@ -6,3 +6,5 @@ export const TEAM_NOT_FOUND = 'There is no team with such id!';
 export const TOKEN_INVALID = 'Token must be a valid token';
 
 export const SERVER_ERROR = 'Internal Server Error';
+
+export const FIELDS_FILLED = 'All fields must be filled';
