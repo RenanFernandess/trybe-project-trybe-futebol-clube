@@ -103,7 +103,7 @@ describe('Testa o login', () => {
 
       expect(res.status).to.be.equal(401);
       expect(res.body.message).to.be.equal(TOKEN_INVALID)
-    })
+    });
 
     it(`Verifica se é retornado code 401 e a mensagem "${TOKEN_INVALID}", caso o token não seja valido.`, async () => {
       const res = await chai
@@ -112,8 +112,26 @@ describe('Testa o login', () => {
         .set({ authorization: 'Invalid_token' });
 
       expect(res.status).to.be.equal(401);
-      expect(res.body.message).to.be.equal(TOKEN_INVALID)
-    })
+      expect(res.body.message).to.be.equal(TOKEN_INVALID);
+    });
+
+    it(`Verifica se é retornado code 200 e role do usuario caso o token seja valido.`, async () => {
+      const { body: { token } } = await chai
+      .request(app)
+      .post('/login')
+        .send({
+          "email": "admin@admin.com",
+          "password": "secret_admin"
+        });
+
+      const res = await chai
+        .request(app)
+        .get('/login/validate')
+        .set({ authorization: token });
+
+      expect(res.status).to.be.equal(200);
+      expect(res.body.role).to.be.equal('admin');
+    });
   });
   afterEach(sinon.restore);
 });
