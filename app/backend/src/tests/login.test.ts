@@ -6,7 +6,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 
 import { Response } from 'superagent';
-import { FIELDS_FILLED, INCORRECT_LOGIN } from '../errors/messages';
+import { FIELDS_FILLED, INCORRECT_LOGIN, TOKEN_INVALID } from '../errors/messages';
 import USER_MOCK from './mocks/user.mock';
 import User from '../database/models/User';
 
@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testa o login', () => {
-  describe('Testa a rota post("/login")', () => {
+  describe('Testa a rota POST "/login"', () => {
     it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o email não seja passado.`, async () => {
       const res = await chai
         .request(app)
@@ -88,8 +88,22 @@ describe('Testa o login', () => {
       expect(res.status).to.be.equal(200);
       expect(typeof res.body.token).to.be.equal('string')
     });
-
-    afterEach(sinon.restore);
   });
 
+  describe('Testa a rota GET "login/validate"', () => {
+    beforeEach(() => sinon
+    .stub(User, 'findByPk')
+    .resolves(USER_MOCK as User));
+
+    it(`Verifica se é retornado code 401 e a mensagem "${TOKEN_INVALID}", caso o token não seja fornecido.`, async () => {
+      const res = await chai
+        .request(app)
+        .get('/login/validate')
+        .set({ authorization: '' });
+
+      expect(res.status).to.be.equal(401);
+      expect(res.body.message).to.be.equal(TOKEN_INVALID)
+    })
+  });
+  afterEach(sinon.restore);
 });
