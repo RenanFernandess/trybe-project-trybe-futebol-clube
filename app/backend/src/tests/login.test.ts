@@ -72,5 +72,21 @@ describe('Testa o login', () => {
     expect(res.body).to.be.deep.equal({ message: INCORRECT_LOGIN })
   });
 
+  it(`Verifica se é possivel fazer login com email e senha validos.`, async () => {
+    sinon
+      .stub(User, "findOne")
+      .resolves(USER_MOCK as User);
+    const res = await chai
+      .request(app)
+      .post('/login')
+      .send({
+        "email": "admin@admin.com",
+        "password": "secret_admin"
+      });
+
+    expect(res.status).to.be.equal(200);
+    expect(typeof res.body.token).to.be.equal('string')
+  });
+
   afterEach(sinon.restore);
 });
