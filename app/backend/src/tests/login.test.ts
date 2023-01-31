@@ -52,4 +52,16 @@ describe('Testa o login', () => {
     expect(res.status).to.be.equal(400);
     expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
   });
+  it(`Verifica se é retornado code 400 e a mensagem "${FIELDS_FILLED}", caso o password não seja passado.`, async () => {
+    const res = await chai
+      .request(app)
+      .post('/login')
+      .send({
+        "email": "test@gmail.com",
+        "password": ""
+      });
+
+    expect(res.status).to.be.equal(400);
+    expect(res.body).to.be.deep.equal({ message: FIELDS_FILLED })
+  });
 });
