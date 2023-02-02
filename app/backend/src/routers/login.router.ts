@@ -1,4 +1,3 @@
-import 'express-async-errors';
 import { Router } from 'express';
 import loginValidate, { tokenValidate } from '../middlewares';
 import LoginService from '../services';
@@ -11,7 +10,7 @@ const loginController = new LoginController(loginService);
 
 const loginRouter = Router();
 
-loginRouter.post('/', loginValidate, (req, res) => { loginController.login(req, res); });
-loginRouter.get('/validate', tokenValidate, (req, res) => { loginController.validate(req, res); });
+loginRouter.post('/', loginValidate, loginController.login);
+loginRouter.get('/validate', tokenValidate, loginController.validate);
 
 export default loginRouter;
