@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { errorRequestHandler } from './middlewares';
 import loginRouter, { leaderboardRouter, matchesRouter, teamsRouter } from './routers';
 
 class App {
@@ -15,6 +16,7 @@ class App {
     this.app.use('/teams', teamsRouter);
     this.app.use('/matches', matchesRouter);
     this.app.use('/leaderboard', leaderboardRouter);
+    this.app.use(errorRequestHandler);
   }
 
   private config():void {
