@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import { Router } from 'express';
 import loginValidate, { tokenValidate } from '../middlewares';
 import LoginService from '../services';
