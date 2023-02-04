@@ -7,8 +7,11 @@ import { app } from '../app';
 
 import { Response } from 'superagent';
 import Match from '../database/models/Match';
-import matchesMock, { matchMock } from './mocks/matches.mock';
-import { MATCH_NOT_FOUND } from '../errors/messages';
+import matchesMock, { matchMock, matchPost, postEqualTeams } from './mocks/matches.mock';
+import userMock from './mocks/user.mock';
+import EQUAL_TEAMS, { MATCH_NOT_FOUND } from '../errors/messages';
+import { login } from './mocks/user.mock';
+import User from '../database/models/User';
 
 chai.use(chaiHttp);
 
@@ -29,6 +32,7 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body).to.be.deep.equal(matchesMock);
     });
   });
+
   describe('Testa a rota GET "/:id"', () => {
     it('Verifica se a partida é retornadas.', async () => {
       sinon.stub(Match, 'findByPk').resolves(matchMock as unknown as Match);
@@ -50,7 +54,25 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body.message).to.be.equal(MATCH_NOT_FOUND);
     });
   });
-  describe('Testa a rota POST "/"', () => {});
+
+  describe('Testa a rota POST "/"', () => {
+    let response: Promise<Response>;
+
+    beforeEach(() => {
+      sinon.stub(User, 'findByPk').resolves(userMock as User);
+      response = chai.request(app).post('/login').send(login);
+    });
+
+    it(`Verifica se retorna o statusCode 422 e a message ${EQUAL_TEAMS}, caso id do time da casa se iqual do time visitante.`, async () => {
+      const { body: { token } } = await response;
+      const res: Response = await chai.request(app).post('/matches').set({ body: postEqualTeams, authorization: token });
+
+      expect(res.status).to.be.equal(422);
+      expect(res.body.message).to.be.equal(EQUAL_TEAMS);
+    });
+  });
+
   describe('Testa a rota PATCH "/:id/finish"', () => {});
+
   describe('Testa a rota PATCH "/:id"', () => {});
 });
