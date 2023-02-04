@@ -23,4 +23,14 @@ describe('Testa o Teams', () => {
       expect(res.body).to.be.deep.equal(teamsMock);
     });
   });
+
+  describe('Testa a rota GET "/teams/:id"', () => {
+    it('Verifica se o time é retornado', async () => {
+      sinon.stub(Team, 'findByPk').resolves(teamMock as Team);
+      const res: Response = await chai.request(app).get('/teams/:id').send({ id: 1 });
+
+      expect(res.body.id).to.be.equal(1);
+      expect(res.body).to.be.deep.equal(teamMock.dataValues);
+    });
+  });
 });
