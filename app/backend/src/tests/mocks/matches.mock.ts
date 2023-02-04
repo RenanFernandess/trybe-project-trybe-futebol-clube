@@ -55,3 +55,17 @@ export const matchMock = {
   get "homeTeam"() { return this.dataValues.homeTeam },
   get "awayTeam"() { return this.dataValues.awayTeam },
 };
+
+export const matchPost = {
+  "homeTeamId": 16,
+  "homeTeamGoals": 1,
+  "awayTeamId": 8,
+  "awayTeamGoals": 1,
+};
+
+export const postEqualTeams = {
+  "homeTeamId": 16,
+  "homeTeamGoals": 1,
+  "awayTeamId": 16,
+  "awayTeamGoals": 1,
+};
