@@ -7,11 +7,9 @@ const matchesMock = [
     "awayTeamGoals": 1,
     "inProgress": false,
     "homeTeam": {
-      "id": 16,
       "teamName": "São Paulo"
     },
     "awayTeam": {
-      "id": 8,
       "teamName": "Grêmio"
     }
   },
@@ -23,11 +21,9 @@ const matchesMock = [
     "awayTeamGoals": 1,
     "inProgress": true,
     "homeTeam": {
-      "id": 9,
       "teamName": "Internacional"
     },
     "awayTeam": {
-      "id": 14,
       "teamName": "Santos"
     }
   },
@@ -36,7 +32,7 @@ const matchesMock = [
 export default matchesMock;
 
 export const matchMock = {
-  dataVaules: {
+  dataValues: {
     "id": 1,
     "homeTeamId": 16,
     "homeTeamGoals": 1,
@@ -44,20 +40,18 @@ export const matchMock = {
     "awayTeamGoals": 1,
     "inProgress": false,
     "homeTeam": {
-      "id": 16,
       "teamName": "São Paulo"
     },
     "awayTeam": {
-      "id": 8,
       "teamName": "Grêmio"
     }
   },
-  get "id"() { return this.dataVaules.id },
-  get "homeTeamId"() { return this.dataVaules.homeTeamId },
-  get "homeTeamGoals"() { return this.dataVaules.homeTeamGoals },
-  get "awayTeamId"() { return this.dataVaules.awayTeamId },
-  get "awayTeamGoals"() { return this.dataVaules.awayTeamGoals },
-  get "inProgress"() { return this.dataVaules.inProgress },
-  get "homeTeam"() { return this.dataVaules.homeTeam },
-  get "awayTeam"() { return this.dataVaules.awayTeam },
+  get "id"() { return this.dataValues.id },
+  get "homeTeamId"() { return this.dataValues.homeTeamId },
+  get "homeTeamGoals"() { return this.dataValues.homeTeamGoals },
+  get "awayTeamId"() { return this.dataValues.awayTeamId },
+  get "awayTeamGoals"() { return this.dataValues.awayTeamGoals },
+  get "inProgress"() { return this.dataValues.inProgress },
+  get "homeTeam"() { return this.dataValues.homeTeam },
+  get "awayTeam"() { return this.dataValues.awayTeam },
 };
