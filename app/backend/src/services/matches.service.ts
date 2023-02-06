@@ -55,9 +55,10 @@ export default class MatchService {
   };
 
   public updateScore = async (id: string, { homeTeamGoals, awayTeamGoals }: TScore) => {
-    await Match.update({
+    const [result] = await Match.update({
       homeTeamGoals,
       awayTeamGoals,
     }, { where: { id } });
+    if (!result) throw new HttpError(404, NOT_UPDATED);
   };
 }
