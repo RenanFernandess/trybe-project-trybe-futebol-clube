@@ -58,9 +58,9 @@ export const matchMock = {
 
 export const matchPost = {
   "homeTeamId": 16,
-  "homeTeamGoals": 1,
+  "homeTeamGoals": 2,
   "awayTeamId": 8,
-  "awayTeamGoals": 1,
+  "awayTeamGoals": 3,
 };
 
 export const postEqualTeams = {
@@ -69,3 +69,20 @@ export const postEqualTeams = {
   "awayTeamId": 16,
   "awayTeamGoals": 1,
 };
+
+export const matchCreatedMock = {
+  dataValues: {
+    "id": 1,
+    "homeTeamId": 16,
+    "homeTeamGoals": 2,
+    "awayTeamId": 8,
+    "awayTeamGoals": 3,
+    "inProgress": true,
+  },
+  get "id"() { return this.dataValues.id },
+  get "homeTeamId"() { return this.dataValues.homeTeamId },
+  get "homeTeamGoals"() { return this.dataValues.homeTeamGoals },
+  get "awayTeamId"() { return this.dataValues.awayTeamId },
+  get "awayTeamGoals"() { return this.dataValues.awayTeamGoals },
+  get "inProgress"() { return this.dataValues.inProgress },
+}
