@@ -9,7 +9,7 @@ import { Response } from 'superagent';
 import Match from '../database/models/Match';
 import matchesMock, { matchMock, matchPost, postEqualTeams } from './mocks/matches.mock';
 import userMock from './mocks/user.mock';
-import EQUAL_TEAMS, { MATCH_NOT_FOUND, TEAM_NOT_FOUND } from '../errors/messages';
+import EQUAL_TEAMS, { MATCH_NOT_FOUND, TEAM_NOT_FOUND, TOKEN_INVALID } from '../errors/messages';
 import { login } from './mocks/user.mock';
 import User from '../database/models/User';
 import Team from '../database/models/Team';
@@ -64,7 +64,18 @@ describe('Testa a rota "/matches"', () => {
       response = chai.request(app).post('/login').send(login);
     });
 
-    it(`Verifica se retorna o statusCode 422 e a message ${EQUAL_TEAMS}, caso id do time da casa se iqual do time visitante.`, async () => {
+    it(`Verifica se retorna o statusCode 401 e a message "${TOKEN_INVALID}", caso o token seja invalido.`, async () => {
+      const res: Response = await chai
+        .request(app)
+        .post('/matches')
+        .send(postEqualTeams)
+        .set({ authorization: 'invalidToken' });
+
+      expect(res.status).to.be.equal(401);
+      expect(res.body.message).to.be.equal(TOKEN_INVALID);
+    });
+
+    it(`Verifica se retorna o statusCode 422 e a message "${EQUAL_TEAMS}", caso id do time da casa se iqual do time visitante.`, async () => {
       const { body: { token } } = await response;
       const res: Response = await chai
         .request(app)
@@ -76,7 +87,7 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body.message).to.be.equal(EQUAL_TEAMS);
     });
 
-    it(`Verifica se retorna o statusCode 404 e a message ${TEAM_NOT_FOUND}, caso id dos times não existão no banco de dados.`, async () => {
+    it(`Verifica se retorna o statusCode 404 e a message "${TEAM_NOT_FOUND}", caso id dos times não existão no banco de dados.`, async () => {
       const { body: { token } } = await response;
       sinon.stub(Team, 'findByPk').resolves(null);
       const res: Response = await chai
