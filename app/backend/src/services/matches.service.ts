@@ -2,7 +2,11 @@ import Team from '../database/models/Team';
 import Match from '../database/models/Match';
 import { TMatchesAdd, TMatchesdb, TMatchesTeam, TScore } from '../types';
 import HttpError from '../errors';
-import EQUAL_TEAMS, { MATCH_NOT_FOUND, TEAM_NOT_FOUND } from '../errors/messages';
+import EQUAL_TEAMS, {
+  MATCH_NOT_FOUND,
+  NOT_UPDATED,
+  TEAM_NOT_FOUND,
+} from '../errors/messages';
 
 export default class MatchService {
   public getAll = (inProgress: boolean | undefined): Promise<Match[]> => Match.findAll({
@@ -45,7 +49,8 @@ export default class MatchService {
   };
 
   public finish = async (id: string | number): Promise<string> => {
-    await Match.update({ inProgress: false }, { where: { id } });
+    const [result] = await Match.update({ inProgress: false }, { where: { id } });
+    if (!result) throw new HttpError(404, NOT_UPDATED);
     return 'finished';
   };
 
