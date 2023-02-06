@@ -9,7 +9,7 @@ import { Response } from 'superagent';
 import Match from '../database/models/Match';
 import matchesMock, { matchCreatedMock, matchMock, matchPost, postEqualTeams } from './mocks/matches.mock';
 import userMock from './mocks/user.mock';
-import EQUAL_TEAMS, { MATCH_NOT_FOUND, TEAM_NOT_FOUND, TOKEN_INVALID } from '../errors/messages';
+import EQUAL_TEAMS, { MATCH_NOT_FOUND, NOT_UPDATED, TEAM_NOT_FOUND, TOKEN_INVALID } from '../errors/messages';
 import { login } from './mocks/user.mock';
 import User from '../database/models/User';
 import Team from '../database/models/Team';
@@ -119,7 +119,15 @@ describe('Testa a rota "/matches"', () => {
 
   });
 
-  describe('Testa a rota PATCH "/:id/finish"', () => {});
+  describe('Testa a rota PATCH "/:id/finish"', () => {
+    it(`Verifica se é retornado o status 404 e messagem "${NOT_UPDATED}, caso a atulização falhe."`, async () => {
+      sinon.stub(Match, 'update').resolves([0]);
+      const res: Response = await chai.request(app).patch('/matches/:id/finish').send();
+
+      expect(res.status).to.be.equal(404);
+      expect(res.body.message).to.be.equal(NOT_UPDATED);
+    });
+  });
 
   describe('Testa a rota PATCH "/:id"', () => {});
 });
