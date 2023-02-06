@@ -7,12 +7,13 @@ import { app } from '../app';
 
 import { Response } from 'superagent';
 import Match from '../database/models/Match';
-import matchesMock, { matchMock, matchPost, postEqualTeams } from './mocks/matches.mock';
+import matchesMock, { matchCreatedMock, matchMock, matchPost, postEqualTeams } from './mocks/matches.mock';
 import userMock from './mocks/user.mock';
 import EQUAL_TEAMS, { MATCH_NOT_FOUND, TEAM_NOT_FOUND, TOKEN_INVALID } from '../errors/messages';
 import { login } from './mocks/user.mock';
 import User from '../database/models/User';
 import Team from '../database/models/Team';
+import { teamMock } from './mocks/teams.mock';
 
 chai.use(chaiHttp);
 
@@ -47,7 +48,7 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body.awayTeam).not.to.have.property('id');
     });
 
-    it(`Verifica se a partida não for encontrada retorna o statusCode 404 e a message "${MATCH_NOT_FOUND}".`, async () => {
+    it(`Verifica se a partida não for encontrada retorna o status 404 e a message "${MATCH_NOT_FOUND}".`, async () => {
       sinon.stub(Match, 'findByPk').resolves(null);
       const res: Response = await chai.request(app).get('/matches/:id').send();
 
@@ -64,7 +65,7 @@ describe('Testa a rota "/matches"', () => {
       response = chai.request(app).post('/login').send(login);
     });
 
-    it(`Verifica se retorna o statusCode 401 e a message "${TOKEN_INVALID}", caso o token seja invalido.`, async () => {
+    it(`Verifica se retorna o status 401 e a message "${TOKEN_INVALID}", caso o token seja invalido.`, async () => {
       const res: Response = await chai
         .request(app)
         .post('/matches')
@@ -75,7 +76,7 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body.message).to.be.equal(TOKEN_INVALID);
     });
 
-    it(`Verifica se retorna o statusCode 422 e a message "${EQUAL_TEAMS}", caso id do time da casa se iqual do time visitante.`, async () => {
+    it(`Verifica se retorna o status 422 e a message "${EQUAL_TEAMS}", caso id do time da casa se iqual do time visitante.`, async () => {
       const { body: { token } } = await response;
       const res: Response = await chai
         .request(app)
@@ -87,7 +88,7 @@ describe('Testa a rota "/matches"', () => {
       expect(res.body.message).to.be.equal(EQUAL_TEAMS);
     });
 
-    it(`Verifica se retorna o statusCode 404 e a message "${TEAM_NOT_FOUND}", caso id dos times não existão no banco de dados.`, async () => {
+    it(`Verifica se retorna o status 404 e a message "${TEAM_NOT_FOUND}", caso id dos times não existão no banco de dados.`, async () => {
       const { body: { token } } = await response;
       sinon.stub(Team, 'findByPk').resolves(null);
       const res: Response = await chai
@@ -99,6 +100,23 @@ describe('Testa a rota "/matches"', () => {
       expect(res.status).to.be.equal(404);
       expect(res.body.message).to.be.equal(TEAM_NOT_FOUND);
     });
+
+    it('Verifica sé ao inserir uma partida com sucesso é retornado o status 201 e os dados da partida.', async () => {
+      const { body: { token } } = await response;
+      sinon.stub(Team, 'findByPk').resolves(teamMock as Team);
+      sinon.stub(Match, 'create').resolves(matchCreatedMock as Match);
+      const res: Response = await chai
+        .request(app)
+        .post('/matches')
+        .send(matchPost)
+        .set({ authorization: token });
+
+      expect(res.status).to.be.equal(201);
+      expect(res.body).to.have.all.keys(['id', 'homeTeamId', 'homeTeamGoals', 'awayTeamId', 'awayTeamGoals', 'inProgress']);
+      expect(res.body.inProgress).to.be.equal(true);
+      expect(res.body).to.be.deep.equal(matchCreatedMock.dataValues);
+    });
+
   });
 
   describe('Testa a rota PATCH "/:id/finish"', () => {});
