@@ -1,7 +1,7 @@
-import loginRouter from './login.router';
-import teamsRouter from './teams.router';
-import matchesRouter from './matches.router';
-import leaderboardRouter from './leaderboard.router';
+import loginRouter from './login.routes';
+import teamsRouter from './teams.routes';
+import matchesRouter from './matches.routes';
+import leaderboardRouter from './leaderboard.routes';
 
 export default loginRouter;
 export { teamsRouter, matchesRouter, leaderboardRouter };
