@@ -120,7 +120,7 @@ describe('Testa a rota "/matches"', () => {
   });
 
   describe('Testa a rota PATCH "/:id/finish"', () => {
-    it(`Verifica se é retornado o status 404 e messagem "${NOT_UPDATED}", caso a atulização falhe."`, async () => {
+    it(`Verifica se é retornado o status 404 e messagem "${NOT_UPDATED}", caso a partida não seja finalizada."`, async () => {
       sinon.stub(Match, 'update').resolves([0]);
       const res: Response = await chai.request(app).patch('/matches/:id/finish').send();
 
@@ -137,5 +137,13 @@ describe('Testa a rota "/matches"', () => {
     });
   });
 
-  describe('Testa a rota PATCH "/:id"', () => {});
+  describe('Testa a rota PATCH "/:id"', () => {
+    it(`Verifica se é retornado o status 404 e messagem "${NOT_UPDATED}", caso o placar não seja atualizado."`, async () => {
+      sinon.stub(Match, 'update').resolves([0]);
+      const res: Response = await chai.request(app).patch('/matches/:id').send();
+
+      expect(res.status).to.be.equal(404);
+      expect(res.body.message).to.be.equal(NOT_UPDATED);
+    });
+  });
 });
