@@ -84,18 +84,6 @@ const leaderboardHomeMock = [
     "efficiency": "44.44"
   },
   {
-    "name": "Minas Brasília",
-    "goalsFavor": 4,
-    "goalsOwn": 6,
-    "totalVictories": 1,
-    "totalDraws": 1,
-    "totalLosses": 2,
-    "totalGames": 4,
-    "totalPoints": 4,
-    "goalsBalance": -2,
-    "efficiency": "33.33"
-  },
-  {
     "name": "Botafogo",
     "goalsFavor": 2,
     "goalsOwn": 4,
@@ -156,6 +144,18 @@ const leaderboardHomeMock = [
     "efficiency": "16.67"
   },
   {
+    "name": "Minas Brasília",
+    "goalsFavor": 3,
+    "goalsOwn": 6,
+    "totalVictories": 0,
+    "totalDraws": 1,
+    "totalLosses": 2,
+    "totalGames": 3,
+    "totalPoints": 1,
+    "goalsBalance": -3,
+    "efficiency": "11.11"
+  },
+  {
     "name": "Avaí/Kindermann",
     "goalsFavor": 3,
     "goalsOwn": 7,
@@ -192,7 +192,6 @@ const leaderboardHomeMock = [
     "efficiency": "0.00"
   }
 ];
-
 export default leaderboardHomeMock;
 
 export const leaderboardAwayMock = [
@@ -257,6 +256,18 @@ export const leaderboardAwayMock = [
     "efficiency": "44.44"
   },
   {
+    "name": "Ferroviária",
+    "goalsFavor": 4,
+    "goalsOwn": 5,
+    "totalVictories": 1,
+    "totalDraws": 1,
+    "totalLosses": 1,
+    "totalGames": 3,
+    "totalPoints": 4,
+    "goalsBalance": -1,
+    "efficiency": "44.44"
+  },
+  {
     "name": "Real Brasília",
     "goalsFavor": 3,
     "goalsOwn": 4,
@@ -279,18 +290,6 @@ export const leaderboardAwayMock = [
     "totalPoints": 4,
     "goalsBalance": -2,
     "efficiency": "44.44"
-  },
-  {
-    "name": "Ferroviária",
-    "goalsFavor": 4,
-    "goalsOwn": 6,
-    "totalVictories": 1,
-    "totalDraws": 1,
-    "totalLosses": 2,
-    "totalGames": 4,
-    "totalPoints": 4,
-    "goalsBalance": -2,
-    "efficiency": "33.33"
   },
   {
     "name": "Flamengo",

@@ -372,10 +372,6 @@ export const teamsWithMatches = [
       {
         "homeTeamGoals": 3,
         "awayTeamGoals": 1
-      },
-      {
-        "homeTeamGoals": 1,
-        "awayTeamGoals": 0
       }
     ]
   },
@@ -454,11 +450,6 @@ export const teamsWithMatches = [
       {
         "homeTeamGoals": 1,
         "awayTeamGoals": 3,
-        "homeTeamId": 10
-      },
-      {
-        "homeTeamGoals": 1,
-        "awayTeamGoals": 0,
         "homeTeamId": 10
       }
     ],
