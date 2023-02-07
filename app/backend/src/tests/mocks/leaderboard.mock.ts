@@ -477,14 +477,14 @@ export const leaderboardMock = [
   {
     "name": "Ferroviária",
     "goalsFavor": 7,
-    "goalsOwn": 8,
+    "goalsOwn": 7,
     "totalVictories": 2,
     "totalDraws": 1,
-    "totalLosses": 3,
-    "totalGames": 6,
+    "totalLosses": 2,
+    "totalGames": 5,
     "totalPoints": 7,
-    "goalsBalance": -1,
-    "efficiency": "38.89"
+    "goalsBalance": 0,
+    "efficiency": "46.67"
   },
   {
     "name": "São José-SP",
@@ -509,18 +509,6 @@ export const leaderboardMock = [
     "totalPoints": 5,
     "goalsBalance": -3,
     "efficiency": "33.33"
-  },
-  {
-    "name": "Minas Brasília",
-    "goalsFavor": 5,
-    "goalsOwn": 9,
-    "totalVictories": 1,
-    "totalDraws": 2,
-    "totalLosses": 3,
-    "totalGames": 6,
-    "totalPoints": 5,
-    "goalsBalance": -4,
-    "efficiency": "27.78"
   },
   {
     "name": "Cruzeiro",
@@ -568,6 +556,18 @@ export const leaderboardMock = [
     "totalGames": 5,
     "totalPoints": 2,
     "goalsBalance": -4,
+    "efficiency": "13.33"
+  },
+  {
+    "name": "Minas Brasília",
+    "goalsFavor": 4,
+    "goalsOwn": 9,
+    "totalVictories": 0,
+    "totalDraws": 2,
+    "totalLosses": 3,
+    "totalGames": 5,
+    "totalPoints": 2,
+    "goalsBalance": -5,
     "efficiency": "13.33"
   },
   {
