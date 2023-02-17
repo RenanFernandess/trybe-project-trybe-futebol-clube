@@ -3,7 +3,7 @@ import ILogin from './login';
 import IUser from './user';
 import ITeam, { ITeamMatches } from './team';
 import IMatch, { IMatchTeams } from './match';
-import ILeaderboard from './leaderboard';
+import ILeaderboard, { ILeaderBoardInit } from './leaderboard';
 import IScore, { IScoreWithId } from './score';
 
 export default IToken;
@@ -12,9 +12,10 @@ export {
   IUser,
   ITeam,
   IMatch,
-  ILeaderboard,
   ITeamMatches,
   IMatchTeams,
+  ILeaderboard,
+  ILeaderBoardInit,
   IScore,
   IScoreWithId,
 };
