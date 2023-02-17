@@ -6,7 +6,6 @@ export default class MatchController {
 
   public getAll = async ({ query: { inProgress } }: Request, res: Response) => {
     const query = (typeof inProgress === 'string') ? JSON.parse(inProgress) : undefined;
-    console.log(query);
     const matches = await this._MatchService.getAll(query);
     return res.status(200).json(matches);
   };
