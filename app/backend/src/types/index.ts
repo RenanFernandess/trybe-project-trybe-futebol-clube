@@ -1,23 +1,6 @@
-import TLogin from './login';
-import TUserdb, { TUser, TUserToken } from './user';
-import TTeams, { TTeamsMatches, TScoreWithId } from './times';
-import TMatchesTeam, { TMatches, TMatchesAdd, TMatchesdb, TScore } from './matches';
-import Tkey, { TLeaderBoard, TLeaderBoardInit } from './leaderboard';
+import Tkey from './leaderboard';
 
-export default TLogin;
+export default Tkey;
 export {
-  TUserdb,
-  TUser,
-  TUserToken,
-  TTeams,
-  TTeamsMatches,
-  TMatchesTeam,
-  TMatches,
-  TMatchesAdd,
-  TMatchesdb,
-  TScore,
   Tkey,
-  TLeaderBoard,
-  TLeaderBoardInit,
-  TScoreWithId,
 };
