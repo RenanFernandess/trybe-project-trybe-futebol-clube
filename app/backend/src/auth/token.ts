@@ -10,8 +10,8 @@ export default class Token implements IToken {
   private _options: jwt.SignOptions;
   private _model: UserModel;
 
-  constructor(model: UserModel) {
-    this._model = model;
+  constructor() {
+    this._model = new UserModel();
     this._secret = process.env.JWT_SECRET || '';
     this._options = {
       algorithm: 'HS256',
