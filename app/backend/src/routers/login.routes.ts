@@ -3,9 +3,11 @@ import loginValidate, { tokenValidate } from '../middlewares';
 import LoginService from '../services';
 import LoginController from '../controllers';
 import Token from '../auth';
+import UserModel from '../models';
 
 const token = new Token();
-const loginService = new LoginService(token);
+const userModel = new UserModel();
+const loginService = new LoginService(userModel, token);
 const loginController = new LoginController(loginService);
 
 const loginRouter = Router();
