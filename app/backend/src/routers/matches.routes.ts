@@ -2,8 +2,11 @@ import { Router } from 'express';
 import { tokenValidate } from '../middlewares';
 import { MatchService } from '../services';
 import { MatchController } from '../controllers';
+import { TeamModel, MatchModel } from '../models';
 
-const matchService = new MatchService();
+const teamModel = new TeamModel();
+const matchModel = new MatchModel();
+const matchService = new MatchService(matchModel, teamModel);
 const matchController = new MatchController(matchService);
 
 const matchesRouter = Router();
