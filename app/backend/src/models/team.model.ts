@@ -5,7 +5,7 @@ import { ITeam } from '../interfaces';
 export default class TeamModel {
   public findAll = (where?: Partial<ITeam>) => Team.findAll({ where });
 
-  public findById = (id: string) => Team.findByPk(id);
+  public findById = (id: string | number) => Team.findByPk(id);
 
   public findTeamWhithMatches = () => {
     const options = { model: Match, where: { inProgress: false }, as: 'homeTeam' };
