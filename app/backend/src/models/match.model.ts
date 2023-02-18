@@ -10,4 +10,11 @@ export default class MatchModel {
     ],
     where,
   });
+
+  public findById = (id: string) => Match.findByPk(id, {
+    include: [
+      { model: Team, as: 'homeTeam', attributes: ['teamName'] },
+      { model: Team, as: 'awayTeam', attributes: ['teamName'] },
+    ],
+  });
 }
