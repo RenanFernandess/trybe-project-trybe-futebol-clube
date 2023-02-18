@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { LeaderboardService } from '../services';
 import { LeaderboardController } from '../controllers';
+import { TeamModel } from '../models';
 
-const leaderboardService = new LeaderboardService();
+const teamModel = new TeamModel();
+const leaderboardService = new LeaderboardService(teamModel);
 const leaderboardController = new LeaderboardController(leaderboardService);
 
 const leaderboardRouter = Router();
