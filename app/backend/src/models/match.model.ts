@@ -3,6 +3,8 @@ import Match from '../database/models/Match';
 import { IMatch } from '../interfaces';
 
 export default class MatchModel {
+  public create = async (match: Omit<IMatch, 'id'>) => Match.create(match);
+
   public findAll = (where: Partial<IMatch> = {}) => Match.findAll({
     include: [
       { model: Team, as: 'homeTeam', attributes: ['teamName'] },
