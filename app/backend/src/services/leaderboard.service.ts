@@ -1,25 +1,24 @@
 import { Tkey } from '../types';
-import Team from '../database/models/Team';
-import Match from '../database/models/Match';
 import { ILeaderboard, ILeaderboardInit, IScoreWithId, ITeamMatches } from '../interfaces';
+import { TeamModel } from '../models';
 
 export default class LeaderboardService {
-  private _initial: ILeaderboardInit = {
-    goalsFavor: 0,
-    goalsOwn: 0,
-    totalVictories: 0,
-    totalDraws: 0,
-    totalLosses: 0,
-  };
+  private _model: TeamModel;
+  private _initial: ILeaderboardInit;
+
+  constructor(model: TeamModel) {
+    this._model = model;
+    this._initial = {
+      goalsFavor: 0,
+      goalsOwn: 0,
+      totalVictories: 0,
+      totalDraws: 0,
+      totalLosses: 0,
+    };
+  }
 
   public findAll = async (path: string) => {
-    const options = { model: Match, where: { inProgress: false }, as: 'homeTeam' };
-    const matchs = await Team.findAll({
-      attributes: { exclude: ['id'] },
-      include: [
-        { ...options, attributes: ['homeTeamGoals', 'awayTeamGoals', 'homeTeamId'] },
-        { ...options, as: 'awayTeam', attributes: ['homeTeamGoals', 'awayTeamGoals'] },
-      ] }) as unknown as ITeamMatches[];
+    const matchs = await this._model.findTeamWhithMatches() as unknown as ITeamMatches[];
     return matchs.map(this._generate(path.slice(1) as Tkey)).sort(this._sort);
   };
 
