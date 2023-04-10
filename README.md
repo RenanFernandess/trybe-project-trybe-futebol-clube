@@ -78,7 +78,7 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 ### Configurando
 
 #### Docker
-O Docker está sendo utilizado para criar um container para o banco de dados MySQL.
+É necessário utilizar o Docker Compose para rodar a aplicação
 
   1. Iniciar o Docker Compose
 
@@ -95,7 +95,7 @@ O Docker está sendo utilizado para criar um container para o banco de dados MyS
 
     touch ./app/backend/.env
     
-  2. Configurar as variáveis
+  2. Adicionar as variáveis no arquivo .env
 
     JWT_SECRET=jwt_secret
     APP_PORT=3001
@@ -107,11 +107,15 @@ O Docker está sendo utilizado para criar um container para o banco de dados MyS
 > Você pode seguir como exemplo o arquivo `.env.example`  na pasta back-end.
 
 ### Executando
+A aplicação é iniciada automaticamente junto com os containers do Compose.
   
+* Para testar a página da aplicação em seu navegador utilize a seguinte URL:
    
-   
-    http://127.0.0.1:3000/
+      http://127.0.0.1:3000/
 
+* URL da API (Back-end):
+   
+      http://127.0.0.1:3001/
  
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
  
